@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { register } = useAuth();
@@ -15,13 +16,13 @@ export default function Register() {
       setError('Email and password required');
       return;
     }
-    register(email);
+    register(email, role);
     navigate('/dashboard');
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={handleRegister} className="bg-white p-6 rounded shadow w-full max-w-sm">
+  <form onSubmit={handleRegister} className="bg-white p-6 rounded shadow w-full max-w-sm">
         <h2 className="text-xl font-bold mb-4">Register</h2>
         <input
           type="email"
@@ -40,6 +41,11 @@ export default function Register() {
           required
         />
         {error && <p className="text-red-500 mb-2">{error}</p>}
+        <label className="block mb-2">Role</label>
+        <select value={role} onChange={e => setRole(e.target.value)} className="border p-2 rounded w-full mb-2">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full">Register</button>
         <button type="button" className="mt-2 text-blue-600 underline w-full" onClick={() => navigate('/login')}>Back to Login</button>
       </form>

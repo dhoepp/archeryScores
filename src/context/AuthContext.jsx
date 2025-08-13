@@ -2,17 +2,18 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Simulate login
-  const login = (email) => {
-    setUser({ email });
+  // Simulate login with role selection
+  const login = (email, role = 'user') => {
+    setUser({ email, role });
   };
 
-  // Simulate registration
-  const register = (email) => {
-    setUser({ email });
+  // Simulate registration with role selection
+  const register = (email, role = 'user') => {
+    setUser({ email, role });
   };
 
   // Simulate logout
