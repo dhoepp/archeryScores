@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     setError('');
-    try {
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.message);
+    if (!email || !password) {
+      setError('Email and password required');
+      return;
     }
+    login(email);
+    navigate('/dashboard');
   };
 
   return (

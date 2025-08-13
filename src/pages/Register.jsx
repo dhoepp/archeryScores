@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { register } = useAuth();
 
-  const handleRegister = async (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
     setError('');
-    try {
-      const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.message);
+    if (!email || !password) {
+      setError('Email and password required');
+      return;
     }
+    register(email);
+    navigate('/dashboard');
   };
 
   return (
