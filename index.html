@@ -10,5 +10,15 @@
   </head>
   <body class="bg-gray-100">
     <div id="root"></div>
+    <div id="fallback" style="color:red;position:fixed;top:0;left:0;z-index:9999;background:#fff;padding:10px;">If you see this, React did not mount.</div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      setTimeout(() => {
+        const root = document.getElementById('root');
+        if (root && root.innerHTML.trim().length > 0) {
+          document.getElementById('fallback').style.display = 'none';
+        }
+      }, 2000);
+    </script>
   </body>
 </html>
